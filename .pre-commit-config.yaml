@@ -1,0 +1,23 @@
+# Copyright (c) 2025 Filip Mårtensson
+repos:
+    - repo: https://github.com/psf/black
+      rev: 24.8.0
+      hooks:
+          - id: black
+            language_version: python3
+
+    - repo: local
+      hooks:
+          - id: check-copyright
+            name: Check Copyright Headers
+            entry: python check_copyright.py
+            language: system
+            types: [text]
+            args:
+                [
+                    "--write",
+                    "--format",
+                    "Copyright (c) {year} {holder}",
+                    "--default-holder",
+                    "Filip Mårtensson",
+                ]

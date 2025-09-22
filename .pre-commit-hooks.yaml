@@ -1,0 +1,8 @@
+# Copyright (c) 2025 Filip Mårtensson
+- id: check-copyright
+  name: Check Copyright Headers
+  entry: check-copyright
+  language: python
+  types: [text]
+  stages: [pre-commit, pre-merge-commit, manual]
+  args: ["--format", "Copyright (c) {year}", "--write"]

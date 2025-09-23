@@ -1,7 +1,7 @@
 # Copyright (c) 2025 Filip Mårtensson
 [project]
 name = "check-copyright"
-version = "v1.2.0"
+version = "v1.2.1"
 
 [project.scripts]
 check-copyright = "hooks.check_copyright.cli:main"

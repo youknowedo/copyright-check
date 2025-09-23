@@ -10,7 +10,7 @@ repos:
       hooks:
           - id: check-copyright
             name: Check Copyright Headers
-            entry: python check_copyright.py
+            entry: python check_copyright/__init__.py
             language: system
             types: [text]
             args:

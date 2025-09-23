@@ -7,7 +7,7 @@ import argparse
 from .core import run_copyright_check
 
 
-def cli():
+def main():
     """Main entry point for the copyright check tool."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -52,4 +52,4 @@ def cli():
 
 
 if __name__ == "__main__":
-    cli()
+    main()

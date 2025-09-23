@@ -9,6 +9,23 @@ from .comment_utils import strip_comment, format_new_comment
 from .copyright_parser import extract_years, fix_years
 
 
+CUSTOM_MIMETYPES = {
+    ".svelte": "text/html",
+    ".ts": "application/javascript",
+    ".tsx": "application/javascript",
+}
+
+
+def get_file_mimetype(file: str) -> Optional[str]:
+    """Get the MIME type for a file, using custom mappings for unsupported extensions."""
+    for ext, mime in CUSTOM_MIMETYPES.items():
+        if file.lower().endswith(ext):
+            return mime
+
+    mime, _ = mimetypes.guess_type(file)
+    return mime
+
+
 def get_copyright_holder(
     file: str, holder_map: dict, default_holder: Optional[str] = None
 ) -> str | None:
@@ -70,7 +87,7 @@ def check_and_fix_file(
     if not lines:
         return True
 
-    mime, _ = mimetypes.guess_type(file)
+    mime = get_file_mimetype(file)
 
     try:
         copyright_holder = get_copyright_holder(file, holder_map, default_holder)

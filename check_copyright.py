@@ -62,16 +62,18 @@ def main():
             print(f"Error reading holder config: {e}")
             sys.exit(1)
 
+    res = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    changed_files = res.stdout.split()
+
     if args.files:
         files = args.files
     else:
-        res = subprocess.run(
-            ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        files = res.stdout.split()
+        files = changed_files
         if not files:
             sys.exit(0)
 
@@ -81,11 +83,24 @@ def main():
 
     failed = []
     for f in files:
+        year = current_year
+        if f not in changed_files:
+            try:
+                res = subprocess.run(
+                    ["git", "log", "-1", "--format=%ad", "--date=format:%Y", f],
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                )
+                year = int(res.stdout.strip())
+            except Exception as e:
+                print(f"Warning: Could not determine last modified year for {f}: {e}")
+
         if not check_and_fix_file(
             f,
             regex,
             args.format,
-            current_year,
+            year,
             placeholder_groups,
             holder_map,
             args.default_holder,

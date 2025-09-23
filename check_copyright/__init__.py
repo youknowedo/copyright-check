@@ -6,8 +6,8 @@ import subprocess
 import datetime
 import argparse
 
-from copyright_parser import compile_regex_from_format, get_placeholder_groups
-from file_operations import check_and_fix_file
+from check_copyright.copyright_parser import compile_regex_from_format, get_placeholder_groups
+from check_copyright.file_operations import check_and_fix_file
 
 
 def main():

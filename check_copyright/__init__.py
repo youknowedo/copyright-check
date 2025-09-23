@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# Copyright (c) 2025 Filip Mårtensson
 
 import sys
 import subprocess
@@ -108,10 +107,6 @@ def main():
             args.verbose,
         ):
             failed.append(f)
-
-    if args.write:
-        for f in files:
-            subprocess.run(["git", "add", f])
 
     if failed:
         print("\nInvalid copyright header:")

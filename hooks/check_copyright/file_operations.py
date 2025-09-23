@@ -5,8 +5,8 @@ import mimetypes
 import re
 from typing import Optional
 
-from comment_utils import strip_comment, format_new_comment
-from copyright_parser import extract_years, fix_years
+from .comment_utils import strip_comment, format_new_comment
+from .copyright_parser import extract_years, fix_years
 
 
 def get_copyright_holder(

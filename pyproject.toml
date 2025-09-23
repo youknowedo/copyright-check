@@ -4,4 +4,4 @@ name = "check-copyright"
 version = "v1.1.3"
 
 [project.scripts]
-check-copyright = "check_copyright:main"
+check-copyright = "hooks.check_copyright.cli:main"

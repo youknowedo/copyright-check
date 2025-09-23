@@ -26,13 +26,13 @@ def get_copyright_holder(
 def add_new_comment(
     lines: list[str],
     line_index: int,
-    format: str,
+    copyright_format: str,
     current_year: int,
     copyright_holder: Optional[str] = None,
     mime: Optional[str] = None,
 ) -> list[str]:
     """Add a new copyright comment to the file at the specified line index."""
-    new_line = format.replace("{year}", str(current_year))
+    new_line = copyright_format.replace("{year}", str(current_year))
 
     if copyright_holder:
         new_line = new_line.replace("{holder}", copyright_holder)
@@ -45,7 +45,7 @@ def add_new_comment(
 def check_and_fix_file(
     file: str,
     regex: re.Pattern,
-    format: str,
+    copyright_format: str,
     current_year: int,
     placeholder_groups: dict,
     holder_map: dict,
@@ -87,7 +87,12 @@ def check_and_fix_file(
                 return False
 
             lines = add_new_comment(
-                lines, line_index, format, current_year, copyright_holder, mime
+                lines,
+                line_index,
+                copyright_format,
+                current_year,
+                copyright_holder,
+                mime,
             )
 
             try:
@@ -105,7 +110,7 @@ def check_and_fix_file(
             return False
 
         lines = add_new_comment(
-            lines, line_index, format, current_year, copyright_holder, mime
+            lines, line_index, copyright_format, current_year, copyright_holder, mime
         )
         try:
             with open(file, "w", encoding="utf-8") as f:
@@ -126,7 +131,7 @@ def check_and_fix_file(
             return False
 
         lines = add_new_comment(
-            lines, line_index, format, current_year, copyright_holder, mime
+            lines, line_index, copyright_format, current_year, copyright_holder, mime
         )
 
         try:

@@ -4,12 +4,12 @@
 import re
 
 
-def compile_regex_from_format(format: str, ignore_case: bool) -> re.Pattern:
+def compile_regex_from_format(copyright_format: str, ignore_case: bool) -> re.Pattern:
     """Compile a regex pattern from a copyright format string with placeholders."""
     year_regex = r"[\d]{4}(?:\s*-\s*[\d]{4})?(?:\s*,\s*[\d]{4}(?:\s*-\s*[\d]{4})?)*"
     holder_regex = r"[^,\n]+"
 
-    regex_pattern = re.escape(format)
+    regex_pattern = re.escape(copyright_format)
     regex_pattern = regex_pattern.replace(r"\{year\}", f"({year_regex})")
     regex_pattern = regex_pattern.replace(r"\{holder\}", f"({holder_regex})")
 
@@ -17,18 +17,18 @@ def compile_regex_from_format(format: str, ignore_case: bool) -> re.Pattern:
     return re.compile(regex_pattern, flags)
 
 
-def get_placeholder_groups(format: str) -> dict:
+def get_placeholder_groups(copyright_format: str) -> dict:
     """Return a mapping of placeholder names to regex group numbers."""
     placeholders = {}
     group_num = 1
 
     i = 0
-    while i < len(format):
-        if format[i : i + 6] == "{year}":
+    while i < len(copyright_format):
+        if copyright_format[i : i + 6] == "{year}":
             placeholders["year"] = group_num
             group_num += 1
             i += 7
-        elif format[i : i + 8] == "{holder}":
+        elif copyright_format[i : i + 8] == "{holder}":
             placeholders["holder"] = group_num
             group_num += 1
             i += 8

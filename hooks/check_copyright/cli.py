@@ -38,10 +38,19 @@ def main():
         nargs="*",
         help="Files to check (if empty, uses git diff --cached)",
     )
+    parser.add_argument(
+        "--ignore",
+        nargs="*",
+        help="Files to ignore",
+    )
     args = parser.parse_args()
 
+    files = args.files
+    if args.ignore:
+        files = [f for f in files if f not in args.ignore]
+
     exit_code = run_copyright_check(
-        files=args.files,
+        files=files,
         format_string=args.format,
         default_holder=args.default_holder,
         holder_config=args.holder_config,
